@@ -1,6 +1,6 @@
 ======================================================================
 MULTIMODAL SSL PIPELINE — VALIDATION REPORT
-Generated: 2026-04-13T07:42:22.261552-04:00
+Generated: 2026-04-13T12:18:14.248260-04:00
 ======================================================================
 
 Summary: 15/15 checks passed
@@ -96,7 +96,7 @@ RESOURCE ESTIMATE
   estimated_peak_ram_ecg_mb: 1008.0
   estimated_peak_ram_total_gb: 1.74
   system_ram_total_gb: 8.6
-  system_ram_available_gb: 2.2
+  system_ram_available_gb: 2.3
   estimated_runtime_minutes: {'har_pamap2': '5-10 (100Hz->20Hz resampling ~9 subjects)', 'har_wisdm': '3-5 (already 20Hz, 51 subjects)', 'har_mhealth': '1-2 (bonus, 10 subjects)', 'eeg': '20-40 (MNE filtering, 109 subjects × 3 runs each)', 'ecg': '15-30 (WFDB loading, 21k records, IO-bound)', 'total_estimate': '45-90 minutes (single core); ~20-40 min with -j4'}
 
   Notes:

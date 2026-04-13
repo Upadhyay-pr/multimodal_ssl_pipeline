@@ -1,6 +1,6 @@
 {
   "report_type": "validation_report",
-  "generated_at": "2026-04-13T07:42:22.261552-04:00",
+  "generated_at": "2026-04-13T12:18:14.248260-04:00",
   "pipeline_version": "1.0.0",
   "summary": {
     "total_checks": 15,
@@ -245,7 +245,7 @@
     "estimated_peak_ram_ecg_mb": 1008.0,
     "estimated_peak_ram_total_gb": 1.74,
     "system_ram_total_gb": 8.6,
-    "system_ram_available_gb": 2.2,
+    "system_ram_available_gb": 2.3,
     "estimated_runtime_minutes": {
       "har_pamap2": "5-10 (100Hz->20Hz resampling ~9 subjects)",
       "har_wisdm": "3-5 (already 20Hz, 51 subjects)",
@@ -261,5 +261,5 @@
       "If peak RAM exceeds available, process ECG in strat_fold batches."
     ]
   },
-  "elapsed_seconds": 27.4
+  "elapsed_seconds": 27.96
 }
