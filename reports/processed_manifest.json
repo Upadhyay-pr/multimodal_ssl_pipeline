@@ -1,0 +1,31 @@
+{
+  "manifest_type": "processed_manifest",
+  "generated_at": "2026-04-13T07:37:09.482956-04:00",
+  "pipeline_version": "1.0.0",
+  "files": [
+    {
+      "file": "data/processed/har/har_pretrain.npz",
+      "modality": "HAR",
+      "shape": [
+        18434,
+        6,
+        200
+      ],
+      "n_windows": 18434,
+      "n_metadata_rows": 18434,
+      "size_bytes": 71332716
+    },
+    {
+      "file": "data/processed/har/har_supervised.npz",
+      "modality": "HAR",
+      "shape": [
+        73752,
+        6,
+        100
+      ],
+      "n_windows": 73752,
+      "n_metadata_rows": 73752,
+      "size_bytes": 74470757
+    }
+  ]
+}

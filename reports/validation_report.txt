@@ -1,0 +1,106 @@
+======================================================================
+MULTIMODAL SSL PIPELINE — VALIDATION REPORT
+Generated: 2026-04-13T07:42:22.261552-04:00
+======================================================================
+
+Summary: 15/15 checks passed
+
+[PASS] har_pretrain.npz
+       details: data/processed/har/har_pretrain.npz
+
+[PASS] har_supervised.npz
+       details: data/processed/har/har_supervised.npz
+
+[PASS] eeg_motor_imagery.npz
+       details: data/processed/eeg/eeg_motor_imagery.npz
+
+[PASS] ecg_ptbxl.npz
+       details: data/processed/ecg/ecg_ptbxl.npz
+
+[PASS] har_pretrain.npz
+       shape: [18434, 6, 200]
+       dtype: float32
+       n_samples: 18434
+       nan_count: 0
+       inf_count: 0
+
+[PASS] har_supervised.npz
+       shape: [73752, 6, 100]
+       dtype: float32
+       n_samples: 73752
+       nan_count: 0
+       inf_count: 0
+
+[PASS] eeg_motor_imagery.npz
+       shape: [4917, 64, 640]
+       dtype: float32
+       n_samples: 4917
+       nan_count: 0
+       inf_count: 0
+
+[PASS] ecg_ptbxl.npz
+       shape: [21388, 12, 1000]
+       dtype: float32
+       n_samples: 21388
+       nan_count: 0
+       inf_count: 0
+
+[PASS] HAR harmonisation
+       har_pretrain.npz_sampling_rates: [20]
+       har_pretrain.npz_n_channels: 6
+       har_pretrain.npz_datasets: ['PAMAP2', 'WISDM']
+       har_supervised.npz_sampling_rates: [20]
+       har_supervised.npz_n_channels: 6
+       har_supervised.npz_datasets: ['PAMAP2', 'WISDM']
+
+[PASS] HAR window sizes
+       har_pretrain.npz_T: 200
+       har_supervised.npz_T: 100
+
+[PASS] Null label handling
+       null_label_count: 0
+       out_of_range_labels: 0
+       label_distribution: {'4': 34431, '5': 12805, '0': 12737, '6': 5168, '1': 4148, '2': 3806, '3': 657}
+
+[PASS] Leakage control
+       har_pretrain.npz_null_subject_ids: 0
+       har_supervised.npz_null_subject_ids: 0
+       ecg_split_distribution: {'train': 17084, 'test': 2158, 'val': 2146}
+       ecg_train_test_patient_overlap: 0
+
+[PASS] EEG annotations
+       unique_labels: [1, 2]
+       signal_shape: [4917, 64, 640]
+       runs_present: [4, 8, 12]
+       n_subjects: 109
+
+[PASS] ECG folds
+       fold_counts: {'1': 2139, '2': 2138, '3': 2150, '4': 2130, '5': 2135, '6': 2129, '7': 2134, '8': 2129, '9': 2146, '10': 2158}
+       split_counts: {'train': 17084, 'test': 2158, 'val': 2146}
+
+[PASS] Submission sample packs
+       har_pretrain_sample.npz: 100
+       har_supervised_sample.npz: 100
+       eeg_motor_imagery_sample.npz: 100
+       ecg_ptbxl_sample.npz: 100
+
+======================================================================
+RESOURCE ESTIMATE
+======================================================================
+  raw_data_disk: 5.8 GB
+  raw_data_disk_bytes: 6268205969
+  processed_disk: 1.6 GB
+  processed_disk_bytes: 1770702851
+  estimated_peak_ram_har_mb: 240.0
+  estimated_peak_ram_eeg_mb: 491.5
+  estimated_peak_ram_ecg_mb: 1008.0
+  estimated_peak_ram_total_gb: 1.74
+  system_ram_total_gb: 8.6
+  system_ram_available_gb: 2.2
+  estimated_runtime_minutes: {'har_pamap2': '5-10 (100Hz->20Hz resampling ~9 subjects)', 'har_wisdm': '3-5 (already 20Hz, 51 subjects)', 'har_mhealth': '1-2 (bonus, 10 subjects)', 'eeg': '20-40 (MNE filtering, 109 subjects × 3 runs each)', 'ecg': '15-30 (WFDB loading, 21k records, IO-bound)', 'total_estimate': '45-90 minutes (single core); ~20-40 min with -j4'}
+
+  Notes:
+    - EEG download: runs 4,8,12 only = ~3 GB (full dataset ~14 GB).
+    - ECG: 100 Hz chosen over 500 Hz saves 5× disk/RAM (1 GB vs 5 GB processed).
+    - For chunked ECG processing on low-RAM machines: set batch_size in config.
+    - If peak RAM exceeds available, process ECG in strat_fold batches.

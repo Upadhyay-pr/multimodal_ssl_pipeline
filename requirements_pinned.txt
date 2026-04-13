@@ -1,0 +1,16 @@
+# =============================================================================
+# requirements_pinned.txt — exact versions for full reproducibility
+# Generated: April 2026 on Python 3.11 (macOS and Linux)
+# Install: pip install -r requirements_pinned.txt
+# =============================================================================
+matplotlib==3.10.8
+mne==1.12.0
+numpy==2.4.4
+pandas==3.0.2
+psutil==7.2.2
+pytest==9.0.3
+PyYAML==6.0.3
+requests==2.33.1
+scipy==1.17.1
+tqdm==4.67.3
+wfdb==4.3.1

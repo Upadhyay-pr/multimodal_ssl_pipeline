@@ -1,0 +1,265 @@
+{
+  "report_type": "validation_report",
+  "generated_at": "2026-04-13T07:42:22.261552-04:00",
+  "pipeline_version": "1.0.0",
+  "summary": {
+    "total_checks": 15,
+    "passed": 15,
+    "failed": 0,
+    "all_passed": true
+  },
+  "checks": [
+    {
+      "name": "har_pretrain.npz",
+      "check": "file_exists",
+      "passed": true,
+      "details": "data/processed/har/har_pretrain.npz",
+      "errors": []
+    },
+    {
+      "name": "har_supervised.npz",
+      "check": "file_exists",
+      "passed": true,
+      "details": "data/processed/har/har_supervised.npz",
+      "errors": []
+    },
+    {
+      "name": "eeg_motor_imagery.npz",
+      "check": "file_exists",
+      "passed": true,
+      "details": "data/processed/eeg/eeg_motor_imagery.npz",
+      "errors": []
+    },
+    {
+      "name": "ecg_ptbxl.npz",
+      "check": "file_exists",
+      "passed": true,
+      "details": "data/processed/ecg/ecg_ptbxl.npz",
+      "errors": []
+    },
+    {
+      "name": "har_pretrain.npz",
+      "check": "array_integrity",
+      "passed": true,
+      "details": {
+        "shape": [
+          18434,
+          6,
+          200
+        ],
+        "dtype": "float32",
+        "n_samples": 18434,
+        "nan_count": 0,
+        "inf_count": 0
+      },
+      "errors": []
+    },
+    {
+      "name": "har_supervised.npz",
+      "check": "array_integrity",
+      "passed": true,
+      "details": {
+        "shape": [
+          73752,
+          6,
+          100
+        ],
+        "dtype": "float32",
+        "n_samples": 73752,
+        "nan_count": 0,
+        "inf_count": 0
+      },
+      "errors": []
+    },
+    {
+      "name": "eeg_motor_imagery.npz",
+      "check": "array_integrity",
+      "passed": true,
+      "details": {
+        "shape": [
+          4917,
+          64,
+          640
+        ],
+        "dtype": "float32",
+        "n_samples": 4917,
+        "nan_count": 0,
+        "inf_count": 0
+      },
+      "errors": []
+    },
+    {
+      "name": "ecg_ptbxl.npz",
+      "check": "array_integrity",
+      "passed": true,
+      "details": {
+        "shape": [
+          21388,
+          12,
+          1000
+        ],
+        "dtype": "float32",
+        "n_samples": 21388,
+        "nan_count": 0,
+        "inf_count": 0
+      },
+      "errors": []
+    },
+    {
+      "name": "HAR harmonisation",
+      "check": "har_harmonisation",
+      "passed": true,
+      "details": {
+        "har_pretrain.npz_sampling_rates": [
+          20
+        ],
+        "har_pretrain.npz_n_channels": 6,
+        "har_pretrain.npz_datasets": [
+          "PAMAP2",
+          "WISDM"
+        ],
+        "har_supervised.npz_sampling_rates": [
+          20
+        ],
+        "har_supervised.npz_n_channels": 6,
+        "har_supervised.npz_datasets": [
+          "PAMAP2",
+          "WISDM"
+        ]
+      },
+      "errors": []
+    },
+    {
+      "name": "HAR window sizes",
+      "check": "har_window_sizes",
+      "passed": true,
+      "details": {
+        "har_pretrain.npz_T": 200,
+        "har_supervised.npz_T": 100
+      },
+      "errors": []
+    },
+    {
+      "name": "Null label handling",
+      "check": "null_labels",
+      "passed": true,
+      "details": {
+        "null_label_count": 0,
+        "out_of_range_labels": 0,
+        "label_distribution": {
+          "4": 34431,
+          "5": 12805,
+          "0": 12737,
+          "6": 5168,
+          "1": 4148,
+          "2": 3806,
+          "3": 657
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "Leakage control",
+      "check": "leakage_control",
+      "passed": true,
+      "details": {
+        "har_pretrain.npz_null_subject_ids": 0,
+        "har_supervised.npz_null_subject_ids": 0,
+        "ecg_split_distribution": {
+          "train": 17084,
+          "test": 2158,
+          "val": 2146
+        },
+        "ecg_train_test_patient_overlap": 0
+      },
+      "errors": []
+    },
+    {
+      "name": "EEG annotations",
+      "check": "eeg_annotations",
+      "passed": true,
+      "details": {
+        "unique_labels": [
+          1,
+          2
+        ],
+        "signal_shape": [
+          4917,
+          64,
+          640
+        ],
+        "runs_present": [
+          4,
+          8,
+          12
+        ],
+        "n_subjects": 109
+      },
+      "errors": []
+    },
+    {
+      "name": "ECG folds",
+      "check": "ecg_folds",
+      "passed": true,
+      "details": {
+        "fold_counts": {
+          "1": 2139,
+          "2": 2138,
+          "3": 2150,
+          "4": 2130,
+          "5": 2135,
+          "6": 2129,
+          "7": 2134,
+          "8": 2129,
+          "9": 2146,
+          "10": 2158
+        },
+        "split_counts": {
+          "train": 17084,
+          "test": 2158,
+          "val": 2146
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "Submission sample packs",
+      "check": "submission_samples",
+      "passed": true,
+      "details": {
+        "har_pretrain_sample.npz": 100,
+        "har_supervised_sample.npz": 100,
+        "eeg_motor_imagery_sample.npz": 100,
+        "ecg_ptbxl_sample.npz": 100
+      },
+      "errors": []
+    }
+  ],
+  "resource_estimate": {
+    "raw_data_disk": "5.8 GB",
+    "raw_data_disk_bytes": 6268205969,
+    "processed_disk": "1.6 GB",
+    "processed_disk_bytes": 1770702851,
+    "estimated_peak_ram_har_mb": 240.0,
+    "estimated_peak_ram_eeg_mb": 491.5,
+    "estimated_peak_ram_ecg_mb": 1008.0,
+    "estimated_peak_ram_total_gb": 1.74,
+    "system_ram_total_gb": 8.6,
+    "system_ram_available_gb": 2.2,
+    "estimated_runtime_minutes": {
+      "har_pamap2": "5-10 (100Hz->20Hz resampling ~9 subjects)",
+      "har_wisdm": "3-5 (already 20Hz, 51 subjects)",
+      "har_mhealth": "1-2 (bonus, 10 subjects)",
+      "eeg": "20-40 (MNE filtering, 109 subjects \u00d7 3 runs each)",
+      "ecg": "15-30 (WFDB loading, 21k records, IO-bound)",
+      "total_estimate": "45-90 minutes (single core); ~20-40 min with -j4"
+    },
+    "notes": [
+      "EEG download: runs 4,8,12 only = ~3 GB (full dataset ~14 GB).",
+      "ECG: 100 Hz chosen over 500 Hz saves 5\u00d7 disk/RAM (1 GB vs 5 GB processed).",
+      "For chunked ECG processing on low-RAM machines: set batch_size in config.",
+      "If peak RAM exceeds available, process ECG in strat_fold batches."
+    ]
+  },
+  "elapsed_seconds": 27.4
+}

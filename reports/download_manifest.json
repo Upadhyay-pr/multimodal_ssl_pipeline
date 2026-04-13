@@ -1,0 +1,56 @@
+{
+  "manifest_type": "download_manifest",
+  "generated_at": "2026-04-13T05:18:40Z",
+  "pipeline_version": "1.0.0",
+  "os": "Darwin",
+  "platform": "macos",
+  "downloader": "wget",
+  "entries": [
+    {
+      "dataset": "PAMAP2",
+      "url": "https://archive.ics.uci.edu/static/public/231/pamap2+physical+activity+monitoring.zip",
+      "local_path": "data/raw/pamap2",
+      "download_date": "2026-04-13T05:18:40Z",
+      "status": "downloaded",
+      "size_bytes": "dir:6 files",
+      "md5": "",
+      "note": "100 Hz wrist+chest+ankle IMU; 9 subjects; 18 activities"
+    },    {
+      "dataset": "WISDM",
+      "url": "https://archive.ics.uci.edu/static/public/507/wisdm+smartphone+and+smartwatch+activity+and+biometrics+dataset.zip",
+      "local_path": "data/raw/wisdm",
+      "download_date": "2026-04-13T05:18:40Z",
+      "status": "downloaded",
+      "size_bytes": "dir:449 files",
+      "md5": "",
+      "note": "20 Hz phone+watch acc+gyr; 51 subjects; 18 activities"
+    },    {
+      "dataset": "mHealth",
+      "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/00319/MHEALTHDATASET.zip",
+      "local_path": "data/raw/mhealth",
+      "download_date": "2026-04-13T05:18:40Z",
+      "status": "skipped",
+      "size_bytes": "dir:2 files",
+      "md5": "",
+      "note": "Skipped by --no-mhealth flag"
+    },    {
+      "dataset": "EEGMMIDB",
+      "url": "https://physionet.org/files/eegmmidb/1.0.0/",
+      "local_path": "data/raw/eegmmidb",
+      "download_date": "2026-04-13T05:18:40Z",
+      "status": "skipped",
+      "size_bytes": "dir:327 files",
+      "md5": "",
+      "note": "Skipped by --skip-eeg flag"
+    },    {
+      "dataset": "PTB-XL",
+      "url": "https://physionet.org/files/ptb-xl/1.0.3/",
+      "local_path": "data/raw/ptbxl",
+      "download_date": "2026-04-13T05:18:40Z",
+      "status": "downloaded",
+      "size_bytes": "dir:58635 files",
+      "md5": "",
+      "note": "12-lead ECG; 21801 records; 18869 patients; 100/500 Hz"
+    }
+  ]
+}

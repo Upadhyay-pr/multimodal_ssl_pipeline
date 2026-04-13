@@ -1,0 +1,204 @@
+# =============================================================================
+# Multimodal SSL Preprocessing Pipeline - Configuration
+# =============================================================================
+
+project:
+  name: "multimodal_ssl_preprocessing"
+  version: "1.0.0"
+  description: "Download, harmonise, and preprocess multimodal time-series datasets for SSL"
+
+paths:
+  raw:       "data/raw"
+  interim:   "data/interim"
+  processed: "data/processed"
+  reports:   "reports"
+  logs:      "logs"
+  submission_sample: "submission_sample"
+
+datasets:
+  pamap2:
+    name: "PAMAP2 Physical Activity Monitoring"
+    modality: "HAR"
+    mandatory: true
+    url: "https://archive.ics.uci.edu/ml/machine-learning-databases/00231/PAMAP2_Dataset.zip"
+    filename: "PAMAP2_Dataset.zip"
+    raw_dir: "data/raw/pamap2"
+    source_rate_hz: 100
+    citation: "Reiss, A. (2012). PAMAP2. UCI ML Repository. https://doi.org/10.24432/C5NW2H"
+
+  wisdm:
+    name: "WISDM Smartphone and Smartwatch Activity"
+    modality: "HAR"
+    mandatory: true
+    url: "https://archive.ics.uci.edu/ml/machine-learning-databases/00507/wisdm-dataset.zip"
+    filename: "wisdm-dataset.zip"
+    raw_dir: "data/raw/wisdm"
+    source_rate_hz: 20
+    citation: "Weiss, G. (2019). WISDM. UCI ML Repository. https://doi.org/10.24432/C5HK59"
+
+  mhealth:
+    name: "MHEALTH Mobile Health Dataset"
+    modality: "HAR/ECG"
+    mandatory: false   # bonus
+    url: "https://archive.ics.uci.edu/ml/machine-learning-databases/00319/MHEALTHDATASET.zip"
+    filename: "MHEALTHDATASET.zip"
+    raw_dir: "data/raw/mhealth"
+    source_rate_hz: 50  # 50 Hz (sensor sampling)
+    citation: "Banos, O. et al. (2014). MHEALTH. UCI ML Repository. https://doi.org/10.24432/C5TW22"
+
+  eegmmidb:
+    name: "EEG Motor Movement/Imagery Dataset"
+    modality: "EEG"
+    mandatory: true
+    # PhysioNet wget download (requires --no-check-certificate on some systems)
+    url: "https://physionet.org/files/eegmmidb/1.0.0/"
+    raw_dir: "data/raw/eegmmidb"
+    source_rate_hz: 160
+    motor_imagery_runs: [4, 8, 12]   # left vs right fist imagery
+    citation: "Schalk et al. (2004). BCI2000. IEEE Trans Biomed Eng 51(6):1034-1043"
+
+  ptbxl:
+    name: "PTB-XL ECG Dataset"
+    modality: "ECG"
+    mandatory: true
+    url: "https://physionet.org/files/ptb-xl/1.0.3/"
+    raw_dir: "data/raw/ptbxl"
+    source_rate_hz_options: [100, 500]
+    chosen_rate_hz: 100   # see preprocessing plan for justification
+    citation: "Wagner et al. (2020). PTB-XL. Nature Scientific Data. https://doi.org/10.13026/cmpy-7k07"
+
+# =============================================================================
+# HAR Harmonisation Settings
+# =============================================================================
+har:
+  target_rate_hz: 20
+
+  # 6-channel shared schema: wrist acc (x,y,z) + wrist/watch gyr (x,y,z)
+  # PAMAP2: IMU at wrist (columns 4-6 acc, 11-13 gyro at 100 Hz)
+  # WISDM:  watch accelerometer + watch gyroscope at 20 Hz
+  channel_schema: ["acc_x", "acc_y", "acc_z", "gyr_x", "gyr_y", "gyr_z"]
+  n_channels: 6
+
+  # Pretraining windows (no labels, no overlap)
+  pretrain:
+    window_sec: 10
+    overlap_frac: 0.0
+
+  # Supervised fine-tuning windows (labelled, 50% overlap)
+  supervised:
+    window_sec: 5
+    overlap_frac: 0.5
+
+  # Unified label schema (intersection of PAMAP2 + WISDM activities)
+  # PAMAP2 uses integer IDs; WISDM uses letter codes
+  # class 0 (transient/null) in PAMAP2 is EXCLUDED
+  label_map:
+    walking:         0
+    jogging:         1
+    stairs_up:       2
+    stairs_down:     3
+    sitting:         4
+    standing:        5
+    cycling:         6
+
+  # PAMAP2 activity ID -> unified label (only overlapping activities kept)
+  pamap2_label_map:
+    1:  "walking"       # walking
+    2:  "walking"       # Nordic walking -> mapped to walking (documented)
+    3:  "jogging"       # running -> jogging
+    4:  "cycling"       # cycling
+    5:  "stairs_up"     # ascending stairs
+    6:  "stairs_down"   # descending stairs
+    7:  "sitting"       # sitting
+    8:  "standing"      # standing
+    # 0 = transient/null -> EXCLUDED
+    # 9..24 = rope jumping, ironing etc -> no WISDM equivalent -> EXCLUDED
+
+  # WISDM activity letter -> unified label
+  wisdm_label_map:
+    "A": "walking"
+    "B": "jogging"
+    "C": "stairs_up"    # climbing stairs (up)
+    "D": "sitting"
+    "E": "standing"
+    "F": "walking"      # walking upstairs -> walking
+    "G": "walking"      # walking downstairs -> walking
+    "H": "sitting"      # sitting in a car -> sitting
+    "I": "sitting"      # eating -> sitting (body still)
+    "J": "sitting"      # eating chips -> sitting
+    "K": "sitting"      # eating pasta -> sitting
+    "L": "sitting"      # eating sandwich -> sitting
+    "M": "sitting"      # eating soup -> sitting
+    "O": "sitting"      # brushing teeth -> sitting
+    "P": "sitting"      # folding clothes -> sitting
+    "Q": "standing"     # frontal elevation of arms -> standing
+    "R": "standing"     # kicking soccer ball -> mapped out
+    "S": "cycling"      # playing tennis -> excluded (no PAMAP2 match)
+
+  # mHealth label map (bonus)
+  mhealth_label_map:
+    0:  null            # null -> EXCLUDED
+    1:  "standing"
+    2:  "sitting"
+    3:  "standing"      # lying down -> mapped out (no equivalent)
+    4:  "walking"
+    5:  "stairs_up"
+    6:  "standing"      # waist bends forward
+    7:  "standing"      # frontal elevation of arms
+    8:  "standing"      # knees bending
+    9:  "cycling"
+    10: "jogging"
+    11: "jogging"       # running -> jogging
+    12: "jogging"       # jump front & back -> jogging
+
+  normalisation: "per_channel_zscore"  # applied after windowing per subject
+  missing_value_strategy: "linear_interpolate_then_ffill"
+  max_interpolation_gap_samples: 10  # ~0.5s at 20 Hz; longer gaps -> window dropped
+
+# =============================================================================
+# EEG Settings
+# =============================================================================
+eeg:
+  dataset: "eegmmidb"
+  target_rate_hz: 160          # keep native rate (justified in plan)
+  runs: [4, 8, 12]             # motor imagery: left vs right fist
+  window_sec: 4.0
+  window_onset: "event"        # windows start at T1/T2 onset
+  include_t0: false            # T0 (rest) not included in default output
+  channel_selection: "all64"   # keep all 64 channels; selection discussed in plan
+  reref: "average"             # common average reference
+  bandpass_hz: [1.0, 40.0]
+  notch_hz: 60.0
+  normalisation: "per_channel_zscore"
+  label_map:
+    "T0": 0   # rest (baseline) - excluded by default
+    "T1": 1   # left fist imagery (runs 4,8,12)
+    "T2": 2   # right fist imagery (runs 4,8,12)
+
+# =============================================================================
+# ECG Settings
+# =============================================================================
+ecg:
+  dataset: "ptbxl"
+  target_rate_hz: 100          # chosen for efficiency (justified in plan)
+  n_channels: 12
+  lead_names: ["I","II","III","aVR","aVL","aVF","V1","V2","V3","V4","V5","V6"]
+  window_sec: 10               # PTB-XL records are exactly 10s
+  # Patient-level splits using PTB-XL strat_fold field
+  # folds 1-8 -> train, fold 9 -> val, fold 10 -> test
+  train_folds: [1,2,3,4,5,6,7,8]
+  val_folds: [9]
+  test_folds: [10]
+  cv_n_folds: 8                # 8-fold CV on train set
+  bandpass_hz: [0.5, 40.0]
+  normalisation: "per_record_zscore"
+  aggregate_labels: "superclass"   # NORM, MI, STTC, CD, HYP
+
+# =============================================================================
+# Output format
+# =============================================================================
+output:
+  dtype: "float32"
+  array_shape: "[N, C, T]"     # batch × channels × time
+  format: "npz"
+  submission_samples_per_dataset: 100

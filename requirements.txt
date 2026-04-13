@@ -1,0 +1,38 @@
+# =============================================================================
+# requirements.txt — Multimodal SSL Preprocessing Pipeline
+# =============================================================================
+# Minimum version requirements (>=) for broad compatibility with Python 3.8+.
+# Tested on Python 3.10 / 3.11 on macOS, Linux, and Windows.
+#
+# Install:
+#   pip install -r requirements.txt
+#
+# For exact pinned versions (reproducibility):
+#   pip install -r requirements_pinned.txt
+# =============================================================================
+
+# Core numerical
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.10.0
+
+# Configuration
+PyYAML>=6.0
+
+# System / utilities
+psutil>=5.9.0
+
+# Signal processing / domain-specific
+mne>=1.3.0          # EEG: EDF+ loading, filtering, rereferencing
+wfdb>=4.0.0         # ECG: WFDB format (PTB-XL records)
+
+# Plotting (validation report figures, optional)
+matplotlib>=3.6.0
+
+# Testing
+pytest>=7.0.0
+
+# HTTP downloads (used by download_datasets.py — stdlib urllib preferred,
+# requests is a convenient fallback)
+requests>=2.28.0
+tqdm>=4.64.0
