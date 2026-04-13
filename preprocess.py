@@ -1369,15 +1369,31 @@ def run_ecg(cfg: dict, out_dir: Path, submission_dir: Path) -> list[dict]:
 
 
 def write_processed_manifest(entries: list[dict], out_path: Path) -> None:
+    # Merge with existing manifest so single-modality runs don't erase other entries
+    existing_files = []
+    if out_path.exists():
+        try:
+            with open(out_path) as f:
+                existing = json.load(f)
+            existing_files = existing.get("files", [])
+        except (json.JSONDecodeError, KeyError):
+            existing_files = []
+
+    # Build lookup of new entries by file path
+    new_paths = {e["file"] for e in entries}
+    # Keep old entries that aren't being replaced by new ones
+    merged = [e for e in existing_files if e["file"] not in new_paths]
+    merged.extend(entries)
+
     manifest = {
         "manifest_type": "processed_manifest",
         "generated_at": datetime.now(tz=None).astimezone().isoformat(),
         "pipeline_version": "1.0.0",
-        "files": entries,
+        "files": merged,
     }
     with open(out_path, "w") as f:
         json.dump(manifest, f, indent=2)
-    logger.info("Processed manifest written to %s", out_path)
+    logger.info("Processed manifest written to %s (%d files)", out_path, len(merged))
 
 
 def main():

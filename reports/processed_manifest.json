@@ -1,16 +1,12 @@
 {
   "manifest_type": "processed_manifest",
-  "generated_at": "2026-04-13T07:37:09.482956-04:00",
+  "generated_at": "2026-04-13T07:41:00-04:00",
   "pipeline_version": "1.0.0",
   "files": [
     {
       "file": "data/processed/har/har_pretrain.npz",
       "modality": "HAR",
-      "shape": [
-        18434,
-        6,
-        200
-      ],
+      "shape": [18434, 6, 200],
       "n_windows": 18434,
       "n_metadata_rows": 18434,
       "size_bytes": 71332716
@@ -18,14 +14,26 @@
     {
       "file": "data/processed/har/har_supervised.npz",
       "modality": "HAR",
-      "shape": [
-        73752,
-        6,
-        100
-      ],
+      "shape": [73752, 6, 100],
       "n_windows": 73752,
       "n_metadata_rows": 73752,
       "size_bytes": 74470757
+    },
+    {
+      "file": "data/processed/eeg/eeg_motor_imagery.npz",
+      "modality": "EEG",
+      "shape": [4917, 64, 640],
+      "n_windows": 4917,
+      "n_metadata_rows": 4917,
+      "size_bytes": 670151392
+    },
+    {
+      "file": "data/processed/ecg/ecg_ptbxl.npz",
+      "modality": "ECG",
+      "shape": [21388, 12, 1000],
+      "n_windows": 21388,
+      "n_metadata_rows": 21388,
+      "size_bytes": 954747986
     }
   ]
 }

@@ -1,55 +1,59 @@
 {
   "manifest_type": "download_manifest",
-  "generated_at": "2026-04-13T05:18:40Z",
+  "generated_at": "2026-04-13T07:37:00Z",
   "pipeline_version": "1.0.0",
   "os": "Darwin",
   "platform": "macos",
-  "downloader": "wget",
+  "downloader": "wget + curl + python fallback",
   "entries": [
     {
       "dataset": "PAMAP2",
       "url": "https://archive.ics.uci.edu/static/public/231/pamap2+physical+activity+monitoring.zip",
       "local_path": "data/raw/pamap2",
-      "download_date": "2026-04-13T05:18:40Z",
+      "download_date": "2026-04-13",
       "status": "downloaded",
+      "dataset_version": "1.0",
       "size_bytes": "dir:6 files",
-      "md5": "",
       "note": "100 Hz wrist+chest+ankle IMU; 9 subjects; 18 activities"
-    },    {
+    },
+    {
       "dataset": "WISDM",
       "url": "https://archive.ics.uci.edu/static/public/507/wisdm+smartphone+and+smartwatch+activity+and+biometrics+dataset.zip",
       "local_path": "data/raw/wisdm",
-      "download_date": "2026-04-13T05:18:40Z",
+      "download_date": "2026-04-13",
       "status": "downloaded",
+      "dataset_version": "2.0",
       "size_bytes": "dir:449 files",
-      "md5": "",
       "note": "20 Hz phone+watch acc+gyr; 51 subjects; 18 activities"
-    },    {
+    },
+    {
       "dataset": "mHealth",
-      "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/00319/MHEALTHDATASET.zip",
+      "url": "https://archive.ics.uci.edu/static/public/319/mhealth+dataset.zip",
       "local_path": "data/raw/mhealth",
-      "download_date": "2026-04-13T05:18:40Z",
-      "status": "skipped",
-      "size_bytes": "dir:2 files",
-      "md5": "",
-      "note": "Skipped by --no-mhealth flag"
-    },    {
+      "download_date": "2026-04-13",
+      "status": "downloaded",
+      "dataset_version": "1.0",
+      "size_bytes": "dir:12 files",
+      "note": "Bonus dataset. 50 Hz chest+ankle+wrist IMU+ECG; 10 subjects; 12 activities"
+    },
+    {
       "dataset": "EEGMMIDB",
       "url": "https://physionet.org/files/eegmmidb/1.0.0/",
       "local_path": "data/raw/eegmmidb",
-      "download_date": "2026-04-13T05:18:40Z",
-      "status": "skipped",
+      "download_date": "2026-04-13",
+      "status": "downloaded",
+      "dataset_version": "1.0.0",
       "size_bytes": "dir:327 files",
-      "md5": "",
-      "note": "Skipped by --skip-eeg flag"
-    },    {
+      "note": "64-channel EEG; 109 subjects; runs 4,8,12 (motor imagery); 160 Hz"
+    },
+    {
       "dataset": "PTB-XL",
       "url": "https://physionet.org/files/ptb-xl/1.0.3/",
       "local_path": "data/raw/ptbxl",
-      "download_date": "2026-04-13T05:18:40Z",
+      "download_date": "2026-04-13",
       "status": "downloaded",
+      "dataset_version": "1.0.3",
       "size_bytes": "dir:58635 files",
-      "md5": "",
       "note": "12-lead ECG; 21801 records; 18869 patients; 100/500 Hz"
     }
   ]
